@@ -1,0 +1,112 @@
+{% load staticfiles %}
+<!DOCTYPE html>
+<html lang="en">
+<link href="{% static "vendor/bootstrap/css/bootstrap.min.css" %}" rel="stylesheet">
+<link href="{% static "vendor/font-awesome/css/font-awesome.min.css" %}" rel="stylesheet" type="text/css">
+<link href='https://fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic' rel='stylesheet' type='text/css'>
+<link href='https://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800' rel='stylesheet' type='text/css'>
+<link href="{% static "css/clean-blog.min.css" %}" rel="stylesheet">
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
+<link href="{% static "css/bootstrap.css" %}" rel="stylesheet" type="text/css"/>
+<script src="{% static "js/bootstrap.js" %}"> </script>
+
+
+
+<head>
+    <header class="masthead">
+        <div class="fullscreen-bg">
+            <video loop muted autoplay poster="img/videoframe.jpg" class="fullscreen-bg__video" style="height: 65%; object-fit: cover; width: 100%;">
+                <source src="{% static "img/Typing.webm" %}" type="video/webm; codecs=vp8,vorbis">
+            </video>
+        </div>
+    </header>
+</head>
+
+<body>
+<font color="#fffff">
+    <!-- Navigation -->
+    <nav class="navbar navbar-expand-lg navbar-light bg-light fixed-top">
+        <div class="container">
+            <a class="navbar-brand" href="/">AID NAVIGATION SYSTEM</a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarResponsive">
+                <ul class="navbar-nav ml-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'signup' %}">Register</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'login' %}">Login</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">Contact</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+
+    <section class="content-section-a"><br><br>
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12 ml-auto">
+                    <div class="section-heading-spacer">
+                        <div class="clearfix"></div>
+                        <h1 class="section-heading" align="center">Welcome to Monash Organizer System!</h1><br><br>
+                        <h1 class="lead" align="center">With Monash
+                            <!-- <a target="_blank" href="http://www.monash.edu/">Monash</a> -->
+                            CMS, you can easily manage your quests and Conferences</h1><br>
+                        <h1 class="lead" align="center"> Register to become a member Today!</h1>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+</font>
+</body>
+
+
+
+<!-- /.container -->
+</section>
+<footer><br><br><br><br><br><br>
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-6 col-md-12 mx-auto">
+                <ul class="list-inline text-center">
+                    <li class="list-inline-item">
+                        <a href="#">
+                  <span class="fa-stack fa-lg">
+                    <i class="fa fa-circle fa-stack-2x"></i>
+                    <i class="fa fa-twitter fa-stack-1x fa-inverse"></i>
+                  </span>
+                        </a>
+                    </li>
+                    <li class="list-inline-item">
+                        <a href="#">
+                  <span class="fa-stack fa-lg">
+                    <i class="fa fa-circle fa-stack-2x"></i>
+                    <i class="fa fa-facebook fa-stack-1x fa-inverse"></i>
+                  </span>
+                        </a>
+                    </li>
+                    <li class="list-inline-item">
+                        <a href="#">
+                  <span class="fa-stack fa-lg">
+                    <i class="fa fa-circle fa-stack-2x"></i>
+                    <i class="fa fa-github fa-stack-1x fa-inverse"></i>
+                  </span>
+                        </a>
+                    </li>
+                </ul>
+                <hr>
+                <p class="copyright text-muted">Copyright &copy; Monash University 2017</p>
+            </div>
+        </div>
+    </div>
+</footer>
+
+</html>

@@ -1,0 +1,35 @@
+{% extends 'base.html' %}
+{% load staticfiles %}
+{% load bootstrap %}
+{% block content %}
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
+<link href="{% static "css/bootstrap.css" %}" rel="stylesheet" type="text/css"/>
+<script src="{% static "js/bootstrap.js" %}"></script>
+{{ form.media }}
+</script>
+
+<head>
+    <header class="masthead" style="background-image: url({% static 'img/banner-bg.jpg' %} ">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-8 col-md-8 mx-auto" align="left">
+                    <div class="page-heading">
+                        <h1 class="post-title" align="left"> New Organizer </h1>
+                <div class="col-md-8" class="subheading"><br>
+                    <font size="4" face="Avenir" color="#fffff">
+                        <form method="POST">
+                            {% csrf_token %}
+                            {{ form|bootstrap }}
+                            <!--<input id="submit" type="submit" value="Submit">-->
+                            <button type="submit" class="btn btn-secondary">Submit</button>&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;
+                            <button type="button" class="btn btn-secondary" onclick="location.href='/organizers'">Cancel</button>
+                        </form>
+                    </font>
+                    <br><br><br>
+                </div>
+            </div>
+        </div>
+    </header>
+    </font>
+</head>
+{% endblock content %}

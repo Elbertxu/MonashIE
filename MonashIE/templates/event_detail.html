@@ -1,0 +1,65 @@
+{% extends 'base.html' %}
+{% load staticfiles %}
+{% block content %}
+
+
+    <header class=" " style="background-image: url({% static 'img/banner-bg.jpg' %} ">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-8 col-md-10 mx-auto">
+                    <div class="page-heading">
+                        <h4>
+                            <!-- Welcome {{ request.user.first_name }}!  --><br><br>
+                        </h4>
+                        <span class="subheading">
+                       <!--  Update Your Event here! -->
+                        <br>
+                    </span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+
+            <div class="page-heading">
+
+            {% if post.submission_date %} > {{ quest.submission_date }}
+            {% endif %}
+
+<div class="container">
+    <!-- Page Heading -->
+    <div class="row">
+        <div class="col-md-10">
+
+            <br><h2 class="post-title">Organizer: </b>{{ session.organizer.title }}</h2><hr>
+                            <font size="3" color="#000">
+                            <div class="post-meta"><b>Reviews: </b> {{ session.assistant_list|linebreaksbr }}</div>
+                            <div class="post-meta"><b>Created on: </b> {{ session.created_date }}</div>
+                            <div class="post-meta"><b>Evaluation Quest Submission Due Date : </b> {{ session.scheduled_time|linebreaksbr }}</div>
+                                <hr></font>
+
+                            <h2 class="post-title">Quest: </b> {{ session.quest_to_review.title }}</h2>
+                            <font size="3" color="#000">
+                            <I><div class="post-meta"> Submitted by: <b>{{ session.quest_to_review.author.first_name }} {{ session.quest_to_review.author.last_name }}</b> on {{ session.quest_to_review.submission_date }}</div></I>
+                            <br><div class="post-meta">{{ session.quest_to_review.intro|linebreaksbr }}</div><hr>
+                            <font size="2" color="#000"><div class="post-meta"> <b>Profession: </b> {{ session.quest_to_review.field|linebreaksbr }}</div><div class="post-meta"><b>Document: </b> <a href="/media/{{ session.quest_to_review.document.name }}" download>{{ session.quest_to_review.get_document_name }}</a></b></div></font>
+                            <hr></font>
+                            <div><h2 class="post-meta"><b>Evaluation quests:</b></h2>
+                            {% for evaluation in evaluation_list %}
+                            <font size="2" color="#000">
+                            <div class="post-meta"><I><a href="/media/evaluations/{{ evaluation.get_evaluation_name }}" download> {{ evaluation }}</a></I></div>
+                            <div class="post-meta"> <b>Submitted By: </b> {{ evaluation.author.first_name }} {{ evaluation.author.last_name }} on {{ evaluation.upload_date }} </div>
+                            </font>
+                            <hr>
+                            {% endfor %}
+                            <br>
+                            <button type="button" class="btn btn-primary" onclick="location.href='{% url 'evaluation_new' pk=session.pk %}'">Submit Evaluation Quest</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock content%}

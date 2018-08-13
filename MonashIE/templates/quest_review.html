@@ -1,0 +1,68 @@
+{% extends "base.html" %}
+{% load staticfiles %}
+{% block content %}
+
+<!-- Page Header -->
+<header class="masthead" style="background-image: url({% static 'img/contact-bg.jpg' %} ">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-md-10 mx-auto">
+                <div class="page-heading">
+                    <h1>Welcome {{ request.user.first_name }}! </h1>
+                    <span class="subheading">Start reviewing the quests, create a organizer session for it!</span>
+                </div>
+            </div>
+        </div>
+    </div>
+</header>
+</head>
+
+<div class="container">
+    <div align="right"><font size="2">
+        <form type="get" action="{% url 'result' %}">
+            <div align="left" class="col-md-4 form-group"><input type="text" size="30" id="q" name = "q" placeholder="Search Quest..."/>&nbsp;
+            <input type="image" src="/static/img/search.png" name="search" inputmode="submit" class="btTxt submit" id="saveForm" /><br></div>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+        </form></font>
+    </div>
+<br>
+
+
+    {% for quest in quests %}
+    <!-- Page Heading -->
+    <!-- Quest One -->
+    <div class="row">
+        <div class="col-md-8">
+            <div class="post-preview">
+                <a href="{% url 'quest_detail' pk=quest.pk %}">
+                <h2 class="post-title"> {{ quest.title }} </h2>
+                <p class="subheading"> {{ quest.intro|linebreaksbr }}</p>
+                <p class="post-meta"> Submitted by: <b>{{ quest.author.first_name }} {{ quest.author.last_name }}</b> on <I>{{ quest.submission_date }}</I> </p>
+                </a>
+                <I><b>Tags: </b>
+                {% for tag in quest.tags.all %}
+                <button style="font-size:10px; padding: 8px" type="button" class="btn btn-primary" onclick="location.href='{% url 'tag_view' tag.pk %}'">{{ tag.name }}</button>
+                {% endfor %}
+                </I>
+            </div>
+        </div>
+
+
+
+
+        <div class="col-md-4 form-group">
+            <font size="2">
+                <div><b>Profession: {{ quest.field|linebreaksbr }}</a></u></b></div>
+                <div><b>Reviewed:</b> {{ quest.get_review_status }} {{ quest.get_review_date|linebreaksbr }}</div>
+                <div><b>Accepted:</b> {{ quest.get_accept_status }} {{ quest.get_accept_date|linebreaksbr }}</div>
+                <div><b>Document: </b> <I> <font size="2" color="#4e85a3"><a href="/media/{{ quest.document }}">{{ quest.get_document_name }}</a></font></I></div>
+                <div><b>Upload On: </b>{{ quest.document_upload_date }}</div>
+                <hr><div><b>Assigned Organizer: </b> {{ quest.organizer }}</div><br>
+            </font>
+            <button type="button" class="btn btn-primary" onclick="location.href='{% url 'create_event' pk=quest.pk %}'">Assign Reviewers</button>
+        </div>
+    </div>
+    <hr>
+    {% endfor %}
+    {% endblock content%}
+

@@ -1,0 +1,50 @@
+{% extends "base.html" %}
+{% load staticfiles %}
+{% load bootstrap %}
+{% block content %}
+
+<!-- Page Header -->
+<header class="masthead" style="background-image: url({% static 'img/home-bg.jpg' %} ">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-md-10 mx-auto">
+                <div class="page-heading">
+                    <h4>Welcome {{ request.user.first_name }}! </h4>
+                    <span class="subheading">View and edit your quest here!</span>
+                </div>
+            </div>
+        </div>
+    </div>
+</header>
+
+<div class="container">
+    <!-- Page Heading -->
+    <div class="row">
+        <div class="col-md-8">
+            <div class="page-heading">
+                <h2 class="post-title"> {{ quest.title }} </h2>
+                <p class="subheading"> {{ quest.intro|linebreaksbr }}</p>
+                <p class="post-meta"> Submitted by: <b>{{ quest.author.first_name }} {{ quest.author.last_name }}</b> on <I>{{ quest.submission_date }}</I> </p>
+            </div>
+                <div><b>Introduction:</b> {{ quest.intro|linebreaksbr }}</div><hr>
+                <div><b>Abstract:</b><br> {{ quest.abstract|linebreaksbr }}</div><br>
+            <button type="button" class="btn btn-primary" onclick="location.href='{% url 'quest_list' %}'">Back To My quests</button>
+        </div>
+
+        <div class="col-md-4 form-group"></br></br>
+            <font size="2">
+                <div><b>Profession:</b> {{ quest.field|linebreaksbr }}</div>
+                <div><b>Reviewed:</b> {{ quest.get_review_status }} {{ quest.get_review_date|linebreaksbr }}</div>
+                <div><b>Accepted:</b> {{ quest.get_accept_status }} {{ quest.get_accept_date|linebreaksbr }}</div><hr>
+                <div><b>Document: </b><br><I><font size="2" color="#4e85a3"><a href="/media/{{ quest.document }}">{{ quest.get_document_name }}</a></font></I></div>
+                <div><b>Upload On: </b>{{ quest.document_upload_date }}</div></br>
+                <div><b>Assigned Organizer: </b> {{ quest.organizer }}</div><br>
+            </font>
+            <button type="button" class="btn btn-primary" onclick="location.href='{% url 'quest_edit' pk=quest.pk %}'">Edit</button>
+
+        </div>
+    </div>
+    <hr>
+</div>
+{% endblock content%}
+

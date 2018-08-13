@@ -1,0 +1,11 @@
+{% autoescape off %}
+
+Dear {{ user.username }},
+
+You are invited to Review "{{ quest }}" on  {{ date }}
+
+Please use the following link to view the details and submit your evaluation document!
+
+http://{{ domain }}{% url 'notification' uidb64=uid token=token %}
+
+{% endautoescape %}

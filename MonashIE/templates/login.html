@@ -1,0 +1,88 @@
+
+{% load staticfiles %}
+{% load bootstrap %}
+<head>
+    <meta charset="UTF-8">
+    <title>AID NAVIGATION </title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="Description" content="Monash Organizer Management System">
+    <meta name="Author" content="Eric Sun">
+
+    <title>AID NAVIGATION </title>
+    <link href="{% static "vendor/bootstrap/css/bootstrap.min.css" %}" rel="stylesheet">
+    <link href="{% static "vendor/font-awesome/css/font-awesome.min.css" %}" rel="stylesheet" type="text/css">
+    <link href='https://fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic' rel='stylesheet' type='text/css'>
+    <link href='https://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800' rel='stylesheet' type='text/css'>
+    <link href="{% static "css/clean-blog.min.css" %}" rel="stylesheet">
+
+
+
+<!-- Bootstrap core JavaScript -->
+<script src="{% static "vendor/jquery/jquery.min.js" %}"></script>
+    <script src="{% static "vendor/popper/popper.min.js" %}"></script>
+<script src="{% static "vendor/bootstrap/js/bootstrap.min.js" %}"></script>
+
+    <!-- Custom scripts for this template -->
+    <script src="{% static "js/clean-blog.min.js" %}"></script>
+
+</head>
+    <div class="navbar navbar-expand-lg navbar-light fixed-top" id="mainNav">
+      <div class="container">
+        <p class="navbar-brand" >AID NAVIGATION SYSTEM</p></div></div>
+<header class="masthead" style="background-image: url({% static 'img/intro-bg.jpg' %} ">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-6 col-md-6 mx-auto">
+                <div class="page-heading">
+                <h2>Login</h2> <br>
+                    <font size="4"  color="#fffff">
+                        <form method="post">
+                            {% csrf_token %}
+                            {{ form|bootstrap }}
+                            <button type="submit" class="btn btn-secondary" >Login</button>&nbsp; &nbsp; &nbsp;
+                            <button type="button" class="btn btn-secondary" onclick="location.href='{% url 'landing' %}'">Cancel</button>&nbsp; &nbsp; &nbsp;
+                            <button type="button" class="btn btn-secondary" onclick="location.href='{% url 'password_reset' %}'">Forget Password?</button>
+                        </form>
+                    </font>
+                </div>
+            </div>
+        </div>
+    </div>
+</header>
+</font>
+<footer>
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-md-10 mx-auto">
+                <ul class="list-inline text-center">
+                    <li class="list-inline-item">
+                        <a href="#">
+                  <span class="fa-stack fa-lg">
+                    <i class="fa fa-circle fa-stack-2x"></i>
+                    <i class="fa fa-twitter fa-stack-1x fa-inverse"></i>
+                  </span>
+                        </a>
+                    </li>
+                    <li class="list-inline-item">
+                        <a href="#">
+                  <span class="fa-stack fa-lg">
+                    <i class="fa fa-circle fa-stack-2x"></i>
+                    <i class="fa fa-facebook fa-stack-1x fa-inverse"></i>
+                  </span>
+                        </a>
+                    </li>
+                    <li class="list-inline-item">
+                        <a href="#">
+                  <span class="fa-stack fa-lg">
+                    <i class="fa fa-circle fa-stack-2x"></i>
+                    <i class="fa fa-github fa-stack-1x fa-inverse"></i>
+                  </span>
+                        </a>
+                    </li>
+                </ul>
+                <p class="copyright text-muted">Copyright &copy; Monash University 2017</p>
+            </div>
+        </div>
+    </div>
+</footer>

@@ -1,0 +1,7 @@
+{% autoescape off %}
+Hi Administrator,
+
+Please click the link below to activate {{ user.first_name }} {{ user.last_name }}'s registration of a Chair Account:
+
+http://{{ domain }}{% url 'activate' uidb64=uid token=token %}
+{% endautoescape %}

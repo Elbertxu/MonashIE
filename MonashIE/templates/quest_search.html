@@ -1,0 +1,48 @@
+{% extends "base.html" %}
+{% load staticfiles %}
+{% block content %}
+
+<!-- Page Header -->
+<header class="masthead" style="background-image: url({% static 'img/home-bg.jpg' %} ">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-md-10 mx-auto">
+                <div class="page-heading">
+                    <h1>Welcome {{ request.user.first_name }}! </h1>
+                    <span class="subheading">All of your quests are listed here!</span>
+                </div>
+            </div>
+        </div>
+    </div>
+</header>
+<div class="container">
+    <div class="row">
+        <div class="col-lg-10 col-sm-12 mx-auto">
+            <b>Search Quest</b>
+            <form type="get" action="{% url 'result' %}">
+            <input type="text" id="q" name = "q" placeholder="Search..."/> <input type="submit" value = "Search Quest"/>
+        </form>
+            </div>
+        </div>
+    </div>
+
+<br>
+{% for quest in quests %}
+<div class="container">
+        <div class="row">
+        <div class="col-lg-10 col-md-12 mx-auto">
+            <div class="post-preview">
+                <h2 class="post-title"> {{ quest.title }} </h2>
+                <p class="subheading"> {{ quest.intro|linebreaksbr }}</p>
+                <p class="post-meta"> Submitted on <I>{{ quest.submission_date }}</I> </p>
+                <div class="clearfix">
+                    <a href="{% url 'quest_detail' pk=quest.pk %}" class="btn btn-secondary float-left">More Info &rarr;</a>
+                </div>
+                <hr>
+            </div>
+        </div>
+        </div>
+    </div>
+</div>
+{% endfor %}
+{% endblock content %}

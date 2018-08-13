@@ -1,0 +1,64 @@
+{% extends 'base.html' %}
+{% load staticfiles %}
+{% block content %}
+
+
+<!-- Page Header -->
+<header class="masthead" style="background-image: url({% static 'img/home-bg.jpg' %} ">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-md-10 mx-auto">
+                <div class="page-heading">
+                    <h4>Welcome {{ request.user.first_name }}! </h4>
+                    <span class="subheading">Upload your evaluation quest here</span>
+                </div>
+            </div>
+        </div>
+    </div>
+</header>
+
+
+<div class="col-md-10">
+            {% if post.submission_date %} > {{ quest.submission_date }}
+            {% endif %}
+
+            <div class="row">
+                <div class="col-md-12 mb-12">
+
+
+                            <h2 class="post-title">Organizer Title: </b>{{ session.conference_title }}</h2>
+                            <h3 class="post-title">Event Topic: </b> {{ session.title }}</h3>
+                            <hr>
+
+                            <h2 class="post-title">Quest: </b> {{ session.quest_to_review.title }}</h2>
+                            <div class="post-meta"> Submitted by: <b>{{ session.quest_to_review.author.first_name }} {{ session.quest_to_review.author.last_name }}</b> on <I>{{ session.quest_to_review.submission_date }}</I> </div>
+
+
+                            {% for evaluation in evaluation_list %}
+
+                            <div class="post-meta"><b>Evaluation Quest: </b><I><font size="2" color="#406f96"> <a href="/media/evaluations/{{ evaluation.get_evaluation_name }}" download> {{ evaluation }}</a></font></I></div>
+                            <font size="3" color="#409196">
+                                <div class="post-meta"> <b>Submitted By: </b> {{ evaluation.author.first_name }} {{ evaluation.author.last_name }}</div>
+                                <div class="post-meta"><b>Submission Date: </b> {{ evaluation.upload_date }} </div>
+                            </font>
+                            <hr>
+                            {% endfor %}
+                            <br>
+
+                            <h4><b>Submit Evaluation Quest</b></h4><form method="post" enctype="multipart/form-data">
+                            {% csrf_token %}
+                            {{ form.as_p }}
+                            <button type="submit" class="btn btn-primary" >Upload</button> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                            <button type="button" class="btn btn-primary" onclick="location.href='{% url 'session_list' %}'">Cancel</button>
+                        </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            </div>
+        </div>
+    </div>
+</div>
+<br><br><hr>
+
+            {% endblock content%}

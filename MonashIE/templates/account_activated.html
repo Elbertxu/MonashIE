@@ -1,0 +1,30 @@
+{% extends 'base.html' %}
+{% load staticfiles %}
+{% block content %}
+<font size="3" face="Arial" color="#2c587c">
+    <header class=" " style="background-image: url({% static 'img/banner-bg.jpg' %} ">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-8 col-md-10 mx-auto">
+                    <div class="page-heading">
+                        <h4>
+                            <!-- Welcome {{ request.user.first_name }}!  --><br><br>
+                        </h4>
+                        <span class="subheading">
+                       <!--  Update Your Event here! -->
+                        <br>
+                    </span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+
+<div class="container"><br><br><br><hr><br>
+  <h1 class="section-heading">Your Account has been activated!</h1><br>
+  <h1 class="lead"><b>Thank you for joining us!</b></h1><br><br><br><br><br><br><br><br><br><br>
+  <hr>
+  <p class="copyright text-muted small">Copyright &copy; Monash University 2017. All Rights Reserved</p>
+  </div>
+  {% endblock content%}

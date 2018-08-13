@@ -1,0 +1,41 @@
+{% extends "base.html" %}
+{% load staticfiles %}
+{% block content %}
+
+<!-- Page Header -->
+<header class="masthead" style="background-image: url({% static 'img/home-bg.jpg' %} ">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-md-10 mx-auto">
+                <div class="page-heading">
+                    <h1>Welcome {{ request.user.first_name }}! </h1>
+                    <span class="subheading">All of your quests are listed here!</span>
+                </div>
+            </div>
+        </div>
+    </div>
+</header>
+
+{% for quest in quests %}
+<div class="container">
+    <div class="row">
+        <div class="col-lg-10 col-md-12 mx-auto">
+            <div class="post-preview">
+                <h2 class="post-title"> {{ quest.title }} </h2>
+                <div class="subheading"> {{ quest.intro|linebreaksbr }}</div>
+                <div class="post-meta"> Submitted on <I>{{ quest.submission_date }}</I></div><br>
+                <I><b>Tags: </b>
+                {% for tag in quest.tags.all %}
+                <button style="font-size:10px; padding: 8px" type="button" class="btn btn-primary" onclick="location.href='{% url 'tag_view' tag.pk %}'">{{ tag.name }}</button>
+                {% endfor %}
+                </I><br><br><br>
+                <div class="clearfix">
+                    <a href="{% url 'quest_detail' pk=quest.pk %}" class="btn btn-secondary float-left">More Info &rarr;</a>
+                </div>
+                <hr>
+            </div>
+        </div>
+    </div>
+</div>
+{% endfor %}
+{% endblock content %}
