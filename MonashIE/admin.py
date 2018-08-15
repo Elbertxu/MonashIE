@@ -8,8 +8,6 @@ from .models import Profile
 admin.site.register(Profile)
 admin.site.register(Quest)
 admin.site.register(Event)
-admin.site.register(Organizer)
-admin.site.register(Evaluation)
 admin.site.register(Tag)
 
 

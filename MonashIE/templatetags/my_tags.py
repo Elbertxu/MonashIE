@@ -17,14 +17,14 @@ def my_tags(context):
             ]
         return {'links': links, 'request_user': request.user}
 
-    if request.user.groups.filter(name='Organizer').exists():
+    if request.user.groups.filter(name='Sponsor').exists():
         links = [
             ['Home', '/papers'],
             ['Manage Conferences', '/organizers'],
             ['All QUESTS', '/quests'],
             ['Logout', '/logout'],
             ]
-        return {'links': links, 'request_user': request.user, 'user_type': ' |Organizer', 'user_field': ''}
+        return {'links': links, 'request_user': request.user, 'user_type': ' |Sponsor', 'user_field': ''}
 
     if request.user.groups.filter(name='User').exists():
         links = [

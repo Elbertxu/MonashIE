@@ -17,9 +17,8 @@ from django.utils.http import urlsafe_base64_decode
 from django.utils.http import urlsafe_base64_encode
 from django.views.decorators.http import require_http_methods
 from django.views.generic import ListView
-
-from .forms import QuestForm, EvaluationForm, SignUpForm, OrganizationForm
-from .models import Quest, Evaluation, Organizer, Event, Tag
+from .forms import QuestForm, SignUpForm
+from .models import Quest, Event, Tag
 from .tokens import account_activation_token
 
 
@@ -57,29 +56,6 @@ def quest_new(request):
     return render(request, 'quest_edit.html', {'form': form})
 
 
-# select organizer in the same type when submitting a quest
-def quest_organizer(request, pk):
-    quest = get_object_or_404(Quest, pk=pk)
-    organizer_list = Organizer.objects.filter(type=quest.type)
-
-    class OrganizerSelectForm(forms.ModelForm):
-        Select = forms.ModelChoiceField(queryset=Organizer.objects.filter(type=quest.type).order_by('title'))
-
-        class Meta:
-            model = Quest
-            fields = ('Select',)
-
-    if request.method == "POST":
-        form = OrganizerSelectForm(request.POST)
-        if form.is_valid():
-            quest.organizer = form.cleaned_data.get('organizers')
-            quest.save()
-            return redirect('quest_detail', pk=quest.pk)
-    else:
-        form = OrganizerSelectForm()
-    return render(request, 'quest_edit_organizer.html', {'form': form, 'quest': quest, 'organizer_list': organizer_list})
-
-
 def quest_edit(request, pk):
     quest = get_object_or_404(Quest, pk=pk)
     if request.method == "POST":
@@ -97,7 +73,7 @@ def quest_edit(request, pk):
 
 
 def quest_list(request):
-    if request.user.groups.filter(name='Organizer').exists():
+    if request.user.groups.filter(name='Sponsor').exists():
         quests = Quest.objects.all().order_by('submission_date')
         return render(request, 'quest_review.html', {'quests': quests})
 
@@ -109,51 +85,10 @@ def quest_list(request):
 def quest_detail(request, pk):
     quest = get_object_or_404(Quest, pk=pk)
     event = Event.objects.filter(quest_to_review=quest)
-    evaluations = Evaluation.objects.filter(event=event)
     if quest.author == request.user:
         return render(request, 'quest_detail.html', {'quest': quest})
     else:
         return render(request, 'quest_detail_review.html', {'quest': quest})
-
-
-def evaluation_new(request, pk):
-    event = get_object_or_404(Event, pk=pk)
-    if request.method == "POST":
-        form = EvaluationForm(request.POST, request.FILES, pk)
-        if form.is_valid():
-            evaluation = form.save(commit=False)
-            evaluation.author = request.user
-            evaluation.event = event
-            evaluation.upload_date = timezone.now()
-            evaluation.save()
-            return redirect('event_detail', pk=event.pk)
-    else:
-        form = EvaluationForm()
-    return render(request, 'evaluation_new.html', {'event': event, 'form': form})
-
-
-def organizer_list(request):
-    organizers = Organizer.objects.all()
-    organizer_paper = {}
-    for organizer in organizers:
-        papers = Quest.objects.filter(organizer=organizer)
-        organizer_paper[organizer] = papers
-    return render(request, 'organizer_list.html', {'organizer_paper': organizer_paper})
-
-
-def create_organizer(request):
-    if request.method == "POST":
-        form = OrganizationForm(request.POST)
-        if form.is_valid():
-            organizer = form.save(commit=False)
-            organizer.owner = request.user
-            organizer.field = form.cleaned_data.get('type')
-            organizer.created_date = timezone.now()
-            organizer.save()
-            return redirect('organizer_list')
-    else:
-        form = OrganizationForm
-    return render(request, 'create_organizer.html', {'form': form})
 
 
 def create_event(request, pk):
@@ -192,8 +127,6 @@ def create_event(request, pk):
                 event.created_date = timezone.now()
                 event.quest_to_review = quest
                 event.title = 'Review ' + quest.title
-                event.organizer = quest.organizer
-                event.scheduled_time = quest.organizer.scheduled_time
                 event.save()
                 event.assistant_list = format_str(event.assistant_list)
                 event.save()
@@ -202,7 +135,7 @@ def create_event(request, pk):
                 for assistant in assistants:
                     user = User.objects.get(username=assistant)
                     current_site = get_current_site(request)
-                    subject = "Organizer invitation to " + assistant
+                    subject = "Sponsor invitation to " + assistant
                     message = render_to_string('notification.html', {
                                 'user': user,
                                 'paper': quest.title,
@@ -223,8 +156,6 @@ def create_event(request, pk):
                 event.created_date = timezone.now()
                 event.quest_to_review = quest
                 event.title = '<Assist>' + ' ' + quest.title
-                event.organizer = quest.organizer
-                event.scheduled_time = quest.organizer.scheduled_time
                 event.save()
                 event.assistant_list = format_str(event.assistant_list)
 
@@ -233,7 +164,7 @@ def create_event(request, pk):
                 for assistant in assistants:
                     user = User.objects.get(username=assistant)
                     current_site = get_current_site(request)
-                    subject = "Organizer invitation to " + assistant
+                    subject = "Sponsor invitation to " + assistant
                     message = render_to_string('notification.html', {
                                 'user': user,
                                 'quest': quest.title,
@@ -253,11 +184,8 @@ def create_event(request, pk):
 def event_detail(request, pk):
     event = get_object_or_404(Event, pk=pk)
     # evaluation_list = []
-    evaluation_list = Evaluation.objects.filter(event=event)
-    if len(evaluation_list) == 0:
-        return render(request, 'event_detail.html', {'event': event})
 
-    return render(request, 'event_detail.html', {'event': event, 'evaluation_list': evaluation_list})
+    return render(request, 'event_detail.html', {'event': event})
 
 
 def set_reviewed(request, pk):
@@ -313,7 +241,7 @@ def signup(request):
                 'token': account_activation_token.make_token(user),
                 'applicant_email': email,
             })
-            if applied_group == 'Organizer':
+            if applied_group == 'Sponsor':
                 send_mail(subject, message_to_admin, 'admin@cms.com', ['admin@cms.com']),
                 user.email_user(subject, 'Your Application is sent to site administrator for approval! - Monash CMS')
                 return render(request, 'account_activation_sent.html', {'email': email})
@@ -347,11 +275,10 @@ def notification(request, uidb64, token):
     try:
         uid = force_text(urlsafe_base64_decode(uidb64))
         event = Event.objects.get(pk=uid)
-        evaluation_list = Evaluation.objects.filter(event=event)
     except (TypeError, ValueError, OverflowError):
         event = None
     if urlsafe_base64_decode(token) == event.title:
-        return render(request, 'event_detail.html', {'event': event, 'evaluation_list': evaluation_list})
+        return render(request, 'event_detail.html', {'event': event})
 
 
 def activated(request):

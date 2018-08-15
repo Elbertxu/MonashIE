@@ -13,10 +13,10 @@
             <div class="col-lg-10 col-md-10 mx-auto">
                 <div class="page-heading">
                     <div class="post-title" align="left">
-                        <h1>Select A Organizer</h1><br>
+                        <h1>Select A Sponsor</h1><br>
                         <h2>Available Conferences in: {{ quest.type }}</h2><br>
-                        {% for organizer in organizer_list %}
-                        <div>{{ organizer.title }} - {{ organizer.scheduled_time }}</div><br>
+                        {% for sponsor in organizer_list %}
+                        <div>{{ sponsor.title }} - {{ sponsor.scheduled_time }}</div><br>
                         {% endfor %}
 
                     </div>

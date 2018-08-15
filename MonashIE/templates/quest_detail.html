@@ -38,7 +38,7 @@
                 <div><b>Accepted:</b> {{ quest.get_accept_status }} {{ quest.get_accept_date|linebreaksbr }}</div><hr>
                 <div><b>Document: </b><br><I><font size="2" color="#4e85a3"><a href="/media/{{ quest.document }}">{{ quest.get_document_name }}</a></font></I></div>
                 <div><b>Upload On: </b>{{ quest.document_upload_date }}</div></br>
-                <div><b>Assigned Organizer: </b> {{ quest.organizer }}</div><br>
+                <div><b>Assigned Sponsor: </b> {{ quest.sponsor }}</div><br>
             </font>
             <button type="button" class="btn btn-primary" onclick="location.href='{% url 'quest_edit' pk=quest.pk %}'">Edit</button>
 
